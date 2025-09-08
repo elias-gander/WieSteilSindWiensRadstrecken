@@ -1,0 +1,4 @@
+datasets/*
+venv
+cache
+**/.DS_Store

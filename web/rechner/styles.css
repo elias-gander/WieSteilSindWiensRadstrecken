@@ -1,0 +1,67 @@
+body {
+  font-family: sans-serif;
+  background: white;
+  padding: 1rem;
+}
+.formula {
+  font-family: serif;
+  font-weight: lighter;
+}
+.calculation {
+  line-height: 2rem;
+}
+.watt {
+  padding: 0 0.2rem;
+  font-weight: bold;
+  font-size: 2rem;
+}
+.inline-slider {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 5px 0;
+}
+input[type="range"] {
+  width: 150px;
+}
+.distribution {
+  margin-top: 1rem;
+}
+.stacked-bar {
+  margin-top: 0.5rem;
+  display: flex;
+  width: 100%;
+  height: 1.5rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.bar {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  white-space: nowrap;
+}
+.legend {
+  margin-top: 0.5rem;
+}
+.legend-item {
+  white-space: nowrap;
+}
+.legend-item-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 0.5rem;
+}
+.footnotes {
+  font-size: 0.8rem;
+  color: darkgray;
+  margin-top: 1rem;
+}
+.assumptions {
+  margin-top: 0.5rem;
+}
+.assumptions ul {
+  margin: 0;
+}

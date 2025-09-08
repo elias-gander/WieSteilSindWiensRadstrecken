@@ -1,0 +1,442 @@
+html,
+body {
+  height: 100dvh;
+  width: 100dvw;
+  margin: 0;
+  padding: 0;
+  font-family: "VT323", monospace;
+  font-size: 18px;
+  overflow: hidden;
+}
+
+#global-loading-indicator-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+}
+
+#global-loading-indicator-container span {
+  animation: spin 1s linear infinite;
+  height: 10px;
+  width: 10px;
+}
+
+#map {
+  position: fixed;
+  width: 100dvw;
+  height: 100dvh;
+}
+
+.maplibregl-ctrl-scale {
+  font-family: "VT323", monospace;
+  font-size: 1rem;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+}
+
+#crosshair {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
+#crosshair::before,
+#crosshair::after {
+  content: "";
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#crosshair::before {
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+#crosshair::after {
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+@media (hover: hover) {
+  #crosshair {
+    display: none;
+  }
+}
+
+#slope-popup {
+  position: fixed;
+  border-radius: 3px;
+  background: white;
+  border: 3px solid black;
+  padding: 10px;
+  pointer-events: none;
+  transform: translate(10px, calc(-100% - 10px));
+}
+
+#length-label {
+  font-size: 0.8rem;
+  opacity: 0.5;
+}
+
+#segment-lengths {
+  position: fixed;
+  top: 10px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  max-width: 60%;
+  width: max-content;
+  border: 3px solid black;
+  border-radius: 3px;
+  background: white;
+  padding: 10px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#filtered-segments {
+  margin-top: 3px;
+  font-size: 0.8rem;
+}
+
+#filtered-segments-length-bar {
+  width: 100%;
+  position: relative;
+  height: 5px;
+}
+
+#filtered-segments-length-bar span {
+  min-width: 1%;
+  max-width: 99%;
+  height: 100%;
+  float: left;
+}
+
+#filtered-segments-length-bar span:first-child {
+  background: #e32f27;
+}
+
+#filtered-segments-length-bar span:last-child {
+  background: #e4e4e4ff;
+}
+
+#filtered-segments-length-bar-labels {
+  display: flex;
+  justify-content: space-between;
+}
+
+#filtered-segments-length-bar-labels span:first-child {
+  color: #e32f27;
+}
+
+#filtered-segments-length-bar-labels span:last-child {
+  color: #e4e4e4ff;
+  text-align: right;
+}
+
+#legend {
+  position: fixed;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  max-width: min(400px, calc(100% - 20px));
+  border-radius: 3px;
+  background: white;
+  border: 3px solid black;
+  padding: 10px 35px;
+  transition: transform 0.3s;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#legend-header {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+#legend-gradient {
+  position: relative;
+  height: 10px;
+  background: linear-gradient(
+    to right,
+    #fff5f0 0%,
+    #fca082 33%,
+    #e32f27 66%,
+    #67000d 100%
+  );
+}
+
+#legend-gradient .mask {
+  width: 50px;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background-color: #e4e4e4ff;
+}
+
+#legend-gradient .mask:nth-child(1) {
+  left: 0;
+}
+
+#legend-gradient .mask:nth-child(2) {
+  right: 0;
+}
+
+#legend-gradient .thumb {
+  position: absolute;
+  top: -6px;
+  width: 8px;
+  height: 16px;
+  border: 3px solid black;
+  border-radius: 3px;
+  cursor: grab;
+}
+
+#legend-gradient .thumb:active {
+  cursor: grabbing;
+}
+
+#legend-gradient .thumb-label {
+  position: absolute;
+  font-size: 0.8rem;
+}
+
+#legend-gradient .thumb:nth-child(3) .thumb-label {
+  right: 15px;
+}
+
+#legend-gradient .thumb:nth-child(4) .thumb-label {
+  left: 15px;
+}
+
+#legend-gradient .thumb:nth-child(3) {
+  left: 0;
+  transform: translateX(-7px);
+}
+
+#legend-gradient .thumb:nth-child(4) {
+  right: 0;
+  transform: translateX(7px);
+}
+
+#legend-labels {
+  position: relative;
+  margin-top: 5px;
+  height: 1rem;
+}
+
+#legend-labels span {
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+#legend-labels span:nth-child(1) {
+  left: 0%;
+}
+#legend-labels span:nth-child(2) {
+  left: 33%;
+}
+#legend-labels span:nth-child(3) {
+  left: 66%;
+}
+#legend-labels span:nth-child(4) {
+  left: 100%;
+}
+
+#infos-link {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  width: 1.5rem;
+  height: 1.5rem;
+  text-align: center;
+  line-height: 1.5rem;
+  background: white;
+  border: 3px solid black;
+}
+
+#infos {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  margin-left: 10px;
+  padding: 10px 40px 10px 10px;
+  border-radius: 3px;
+  transition: transform 0.3s;
+  max-width: 400px;
+  background: white;
+  border: 3px solid black;
+  transform: translate(calc(100% + 10px), calc(-100% - 10px));
+}
+
+#infos p:first-of-type {
+  margin-top: 0;
+}
+#infos p:last-of-type {
+  margin-bottom: 0;
+}
+
+#infos.visible {
+  transform: translate(0);
+}
+
+#loading-indicator-container {
+  position: relative;
+}
+
+#loading-indicator {
+  animation: spin 1s linear infinite;
+  height: 10px;
+  width: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.2);
+}
+
+@keyframes spin {
+  0% {
+    box-shadow: 0px -30px #000, 10px -30px #000, 20px -20px #000,
+      30px -10px #000, 30px 0px #000, 30px 10px #000, 20px 20px #000,
+      10px 30px #000, 0px 30px transparent, -10px 30px transparent,
+      -20px 20px transparent, -30px 10px transparent, -30px 0px transparent,
+      -30px -10px transparent, -20px -20px transparent, -10px -30px transparent;
+  }
+  6.25% {
+    box-shadow: 0px -30px transparent, 10px -30px #000, 20px -20px #000,
+      30px -10px #000, 30px 0px #000, 30px 10px #000, 20px 20px #000,
+      10px 30px #000, 0px 30px #000, -10px 30px transparent,
+      -20px 20px transparent, -30px 10px transparent, -30px 0px transparent,
+      -30px -10px transparent, -20px -20px transparent, -10px -30px transparent;
+  }
+  12.5% {
+    box-shadow: 0px -30px transparent, 10px -30px transparent, 20px -20px #000,
+      30px -10px #000, 30px 0px #000, 30px 10px #000, 20px 20px #000,
+      10px 30px #000, 0px 30px #000, -10px 30px #000, -20px 20px transparent,
+      -30px 10px transparent, -30px 0px transparent, -30px -10px transparent,
+      -20px -20px transparent, -10px -30px transparent;
+  }
+  18.75% {
+    box-shadow: 0px -30px transparent, 10px -30px transparent,
+      20px -20px transparent, 30px -10px #000, 30px 0px #000, 30px 10px #000,
+      20px 20px #000, 10px 30px #000, 0px 30px #000, -10px 30px #000,
+      -20px 20px #000, -30px 10px transparent, -30px 0px transparent,
+      -30px -10px transparent, -20px -20px transparent, -10px -30px transparent;
+  }
+  25% {
+    box-shadow: 0px -30px transparent, 10px -30px transparent,
+      20px -20px transparent, 30px -10px transparent, 30px 0px #000,
+      30px 10px #000, 20px 20px #000, 10px 30px #000, 0px 30px #000,
+      -10px 30px #000, -20px 20px #000, -30px 10px #000, -30px 0px transparent,
+      -30px -10px transparent, -20px -20px transparent, -10px -30px transparent;
+  }
+  31.25% {
+    box-shadow: 0px -30px transparent, 10px -30px transparent,
+      20px -20px transparent, 30px -10px transparent, 30px 0px transparent,
+      30px 10px #000, 20px 20px #000, 10px 30px #000, 0px 30px #000,
+      -10px 30px #000, -20px 20px #000, -30px 10px #000, -30px 0px #000,
+      -30px -10px transparent, -20px -20px transparent, -10px -30px transparent;
+  }
+  37.5% {
+    box-shadow: 0px -30px transparent, 10px -30px transparent,
+      20px -20px transparent, 30px -10px transparent, 30px 0px transparent,
+      30px 10px transparent, 20px 20px #000, 10px 30px #000, 0px 30px #000,
+      -10px 30px #000, -20px 20px #000, -30px 10px #000, -30px 0px #000,
+      -30px -10px #000, -20px -20px transparent, -10px -30px transparent;
+  }
+  43.75% {
+    box-shadow: 0px -30px transparent, 10px -30px transparent,
+      20px -20px transparent, 30px -10px transparent, 30px 0px transparent,
+      30px 10px transparent, 20px 20px transparent, 10px 30px #000,
+      0px 30px #000, -10px 30px #000, -20px 20px #000, -30px 10px #000,
+      -30px 0px #000, -30px -10px #000, -20px -20px #000,
+      -10px -30px transparent;
+  }
+  50% {
+    box-shadow: 0px -30px transparent, 10px -30px transparent,
+      20px -20px transparent, 30px -10px transparent, 30px 0px transparent,
+      30px 10px transparent, 20px 20px transparent, 10px 30px transparent,
+      0px 30px #000, -10px 30px #000, -20px 20px #000, -30px 10px #000,
+      -30px 0px #000, -30px -10px #000, -20px -20px #000, -10px -30px #000;
+  }
+  56.25% {
+    box-shadow: 0px -30px #000, 10px -30px transparent, 20px -20px transparent,
+      30px -10px transparent, 30px 0px transparent, 30px 10px transparent,
+      20px 20px transparent, 10px 30px transparent, 0px 30px transparent,
+      -10px 30px #000, -20px 20px #000, -30px 10px #000, -30px 0px #000,
+      -30px -10px #000, -20px -20px #000, -10px -30px #000;
+  }
+  62.5% {
+    box-shadow: 0px -30px #000, 10px -30px #000, 20px -20px transparent,
+      30px -10px transparent, 30px 0px transparent, 30px 10px transparent,
+      20px 20px transparent, 10px 30px transparent, 0px 30px transparent,
+      -10px 30px transparent, -20px 20px #000, -30px 10px #000, -30px 0px #000,
+      -30px -10px #000, -20px -20px #000, -10px -30px #000;
+  }
+  68.75% {
+    box-shadow: 0px -30px #000, 10px -30px #000, 20px -20px #000,
+      30px -10px transparent, 30px 0px transparent, 30px 10px transparent,
+      20px 20px transparent, 10px 30px transparent, 0px 30px transparent,
+      -10px 30px transparent, -20px 20px transparent, -30px 10px #000,
+      -30px 0px #000, -30px -10px #000, -20px -20px #000, -10px -30px #000;
+  }
+  75% {
+    box-shadow: 0px -30px #000, 10px -30px #000, 20px -20px #000,
+      30px -10px #000, 30px 0px transparent, 30px 10px transparent,
+      20px 20px transparent, 10px 30px transparent, 0px 30px transparent,
+      -10px 30px transparent, -20px 20px transparent, -30px 10px transparent,
+      -30px 0px #000, -30px -10px #000, -20px -20px #000, -10px -30px #000;
+  }
+  81.25% {
+    box-shadow: 0px -30px #000, 10px -30px #000, 20px -20px #000,
+      30px -10px #000, 30px 0px #000, 30px 10px transparent,
+      20px 20px transparent, 10px 30px transparent, 0px 30px transparent,
+      -10px 30px transparent, -20px 20px transparent, -30px 10px transparent,
+      -30px 0px transparent, -30px -10px #000, -20px -20px #000,
+      -10px -30px #000;
+  }
+  87.5% {
+    box-shadow: 0px -30px #000, 10px -30px #000, 20px -20px #000,
+      30px -10px #000, 30px 0px #000, 30px 10px #000, 20px 20px transparent,
+      10px 30px transparent, 0px 30px transparent, -10px 30px transparent,
+      -20px 20px transparent, -30px 10px transparent, -30px 0px transparent,
+      -30px -10px transparent, -20px -20px #000, -10px -30px #000;
+  }
+  93.75% {
+    box-shadow: 0px -30px #000, 10px -30px #000, 20px -20px #000,
+      30px -10px #000, 30px 0px #000, 30px 10px #000, 20px 20px #000,
+      10px 30px transparent, 0px 30px transparent, -10px 30px transparent,
+      -20px 20px transparent, -30px 10px transparent, -30px 0px transparent,
+      -30px -10px transparent, -20px -20px transparent, -10px -30px #000;
+  }
+  100% {
+    box-shadow: 0px -30px #000, 10px -30px #000, 20px -20px #000,
+      30px -10px #000, 30px 0px #000, 30px 10px #000, 20px 20px #000,
+      10px 30px #000, 0px 30px transparent, -10px 30px transparent,
+      -20px 20px transparent, -30px 10px transparent, -30px 0px transparent,
+      -30px -10px transparent, -20px -20px transparent, -10px -30px transparent;
+  }
+}

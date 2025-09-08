@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Benötigte Leistung beim Radeln</title>
+    <script src="https://unpkg.com/petite-vue@0.4.1"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div v-scope>
+      <div class="calculation">
+        Du musst
+        <span class="watt">{{ totalPower.toFixed(0) }} Watt</span>
+        treten
+        <br />um deine
+        <div class="inline-slider">
+          <span>{{ M.toFixed(0) }} kg</span>
+          <input type="range" min="50" max="120" step="1" v-model.number="M" />
+          (<span class="formula">M</span>)
+        </div>
+        <br />
+        mit
+        <div class="inline-slider">
+          <span>{{ speedKmh.toFixed(0) }} km/h</span>
+          <input
+            type="range"
+            min="1"
+            max="50"
+            step="1"
+            v-model.number="speedKmh"
+          />
+          (<span class="formula">s</span>)
+        </div>
+        <br />
+        eine
+        <div class="inline-slider">
+          <span>{{ (i * 100).toFixed(0) }} % Steigung</span>
+          <input
+            type="range"
+            min="0"
+            max="0.15"
+            step="0.01"
+            v-model.number="i"
+          />
+          (<span class="formula">i</span>)
+        </div>
+        hochzuradln.
+      </div>
+
+      <div class="distribution">
+        Davon:
+        <div class="stacked-bar">
+          <div
+            class="bar"
+            :style="{ width: rollingResistancePercent + '%', background: '#8FC7FF'}"
+          ></div>
+          <div
+            class="bar"
+            :style="{ width: windResistancePercent + '%' , background: '#F3FF8F'}"
+          ></div>
+          <div
+            class="bar"
+            :style="{ width: slopeResistancePercent + '%', background: '#FF968F' }"
+          ></div>
+        </div>
+
+        <div class="legend">
+          <span class="legend-item">
+            <span
+              class="legend-item-dot"
+              :style="{background: '#8FC7FF'}"
+            ></span>
+            {{ rollingResistance.toFixed(0) }} W Rollwiderstand</span
+          >
+          <span class="legend-item">
+            <span
+              class="legend-item-dot"
+              :style="{background: '#F3FF8F'}"
+            ></span>
+            {{ windResistance.toFixed(0) }} W Luftwiderstand</span
+          >
+          <span class="legend-item">
+            <span
+              class="legend-item-dot"
+              :style="{background: '#FF968F'}"
+            ></span>
+            {{ slopeResistance.toFixed(0) }} W Steigungswiderstand</span
+          >
+        </div>
+      </div>
+
+      <div class="footnotes">
+        Berechnung gemäß der Formel (<a
+          href="https://en.wikipedia.org/wiki/Bicycle_performance?#Power_required"
+          >Wikipedia</a
+        >):<br />
+        <span class="formula"
+          >P = P<sub>roll</sub> + P<sub>wind</sub> + P<sub>steig</sub> =
+          <br />C<sub>rr</sub> · M · g · s + ½ · ρ · C<sub>d</sub> · A · v³ + M
+          · g · i · s
+        </span>
+
+        <div class="assumptions">
+          Annahmen:<br />
+          <ul>
+            <li>
+              Rollwiderstandskoeffizient
+              <span class="formula">C<sub>rr</sub></span>
+              = {{ Crr }} (Asphalt)
+            </li>
+            <li>
+              Frontfläche
+              <span class="formula">A</span>
+              = {{ A }} m² (aufrechte Sitzhaltung)
+            </li>
+            <li>
+              Luftwiderstands-Koeffizient
+              <span class="formula">C<sub>d</sub></span>
+              = {{ Cd }} (wenig aerodynamisch)
+            </li>
+            <li>
+              Geschwindigkeit relativ zur Luft
+              <span class="formula">v</span>
+              =
+              <span class="formula">s</span>
+              (kein Gegen- oder Rückenwind)
+            </li>
+            <li>
+              Luftdichte
+              <span class="formula">ρ</span>
+              = {{ d }} kg/m³ (Meereshöhe)
+            </li>
+            <li>
+              Gravitationsbeschleunigung
+              <span class="formula">g</span>
+              = {{ g }} m/s²
+            </li>
+            <li>100% effizienter Antrieb (Kette, Ritzel, ...)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      PetiteVue.createApp({
+        M: 75,
+        speedKmh: 15,
+        i: 0.05,
+
+        Crr: 0.005,
+        A: 0.5,
+        Cd: 1,
+        d: 1.225,
+        g: 9.81,
+
+        get s() {
+          return this.speedKmh / 3.6;
+        },
+        get rollingResistance() {
+          return this.Crr * this.M * this.g * this.s;
+        },
+        get windResistance() {
+          return 0.5 * this.d * this.Cd * this.A * this.s * this.s * this.s;
+        },
+        get slopeResistance() {
+          return this.M * this.g * this.i * this.s;
+        },
+        get totalPower() {
+          return (
+            this.rollingResistance + this.windResistance + this.slopeResistance
+          );
+        },
+
+        get rollingResistancePercent() {
+          return this.totalPower
+            ? (this.rollingResistance / this.totalPower) * 100
+            : 0;
+        },
+        get windResistancePercent() {
+          return this.totalPower
+            ? (this.windResistance / this.totalPower) * 100
+            : 0;
+        },
+        get slopeResistancePercent() {
+          return this.totalPower
+            ? (this.slopeResistance / this.totalPower) * 100
+            : 0;
+        },
+      }).mount();
+    </script>
+  </body>
+</html>

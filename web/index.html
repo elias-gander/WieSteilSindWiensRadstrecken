@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wie steil sind Wiens Radstrecken?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/rbush@3.0.1/rbush.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body v-scope="App" @pointermove="drag($event)" @pointerup="stopDragging()">
+    <div id="map"></div>
+    <div id="crosshair"></div>
+    <div
+      id="slope-popup"
+      :style="{ left: App.cursorX + 'px', top: App.cursorY + 'px', visibility: App.slopeLabel ? 'visible' : 'hidden' }"
+    >
+      <div id="slope-label">{{ App.slopeLabel }}</div>
+      <div id="length-label">{{ App.lengthLabel }}</div>
+    </div>
+    <div id="segment-lengths">
+      <div>{{ App.visibleSegmentLengthLabel }} von 1800 km sichtbar</div>
+      <div
+        id="filtered-segments"
+        v-if="App.isFiltering && App.visibleSegmentLength > 0"
+      >
+        davon
+        <div id="filtered-segments-length-bar">
+          <span
+            :style="{ width: 100 - App.filteredSegmentsLengthPercentage + '%' }"
+          ></span>
+          <span
+            :style="{ width: App.filteredSegmentsLengthPercentage + '%' }"
+          ></span>
+        </div>
+        <div id="filtered-segments-length-bar-labels">
+          <span
+            >{{ App.notFilteredSegmentsLengthLabel }} ({{
+            App.notFilteredSegmentsLengthPercentageLabel }})</span
+          >
+          <span
+            >{{ App.filteredSegmentsLengthLabel }} ({{
+            App.filteredSegmentsLengthPercentageLabel }})</span
+          >
+        </div>
+      </div>
+    </div>
+    <div id="legend" v-bind:class="{ hidden: !App.isLegendPresented }">
+      <span id="legend-header">Neigung [%]</span>
+      <div id="legend-gradient">
+        <div class="mask" :style="{ width: App.lowerThumbOffset + 'px' }"></div>
+        <div class="mask" :style="{ width: App.upperThumbOffset + 'px' }"></div>
+        <div
+          class="thumb"
+          :style="{ left: App.lowerThumbOffset + 'px' }"
+          @pointerdown="startDragging('lower')"
+        >
+          <span class="thumb-label" v-if="App.isFiltering || App.dragging"
+            >{{App.lowerThumbLabel}}</span
+          >
+        </div>
+        <div
+          class="thumb"
+          :style="{ right: App.upperThumbOffset + 'px'}"
+          @pointerdown="startDragging('upper')"
+        >
+          <span class="thumb-label" v-if="App.isFiltering || App.dragging"
+            >{{App.upperThumbLabel}}</span
+          >
+        </div>
+      </div>
+      <div id="legend-labels">
+        <span>0</span>
+        <span>5</span>
+        <span>10</span>
+        <span>≥15</span>
+      </div>
+    </div>
+    <div id="infos" v-bind:class="{ visible: App.isInfosPresented }">
+      <p>
+        Diese Karte visualisiert die Neigung von für Fahrräder geeigneten Wegen
+        in Wien. Die Neigung ist als prozentuale Steigung bzw. Gefälle
+        angegeben:
+      </p>
+      <ul>
+        <li>0% ... flache Strecke</li>
+        <li>
+          100% ... 45°-Steigung oder Gefälle (1 Meter bergauf oder bergab auf 1
+          Meter Entfernung)
+        </li>
+      </ul>
+      <p>
+        Die Berechnung der Neigung basiert auf dem
+        <a
+          href="https://www.data.gv.at/katalog/de/dataset/stadt-wien_baumkatasterderstadtwien"
+          target="_blank"
+          >Geländemodell</a
+        >
+        der MA 41. Die Höhenlinien haben eine Auflösung von 1 m und eine
+        <a
+          href="https://www.wien.gv.at/stadtentwicklung/stadtvermessung/geodaten/dgm/produkt.html"
+          target="_blank"
+          >Genauigkeit von ± 10 cm</a
+        >.
+      </p>
+      <p>
+        Die für Fahrräder geeigneten Wege stammen von
+        <a href="https://www.openstreetmap.org" target="_blank">OpenStreetMap</a
+        >.
+      </p>
+      <p>Stand der visualisierten Daten: 08.09.2025</p>
+      <p>
+        <a
+          href="https://elias-gander.github.io/2025-9-8-wie-steil-sind-wiens-radstrecken"
+          target="_blank"
+          >Weitere Informationen und source code.</a
+        >
+      </p>
+
+      <p>
+        Straßennamen von &copy;<a
+          href="https://openmaptiles.org/"
+          target="_blank"
+          >OpenMapTiles</a
+        >
+        und &copy;<a
+          href="https://www.openstreetmap.org/copyright"
+          target="_blank"
+          >OpenStreetMap</a
+        >
+      </p>
+    </div>
+    <span id="infos-link" @click="App.isInfosPresented = !App.isInfosPresented"
+      >{{ App.isInfosPresented ? 'X' : '?'}}</span
+    >
+
+    <div v-if="!App.isReady" id="global-loading-indicator-container">
+      <span></span>
+    </div>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
