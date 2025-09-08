@@ -4,7 +4,7 @@ Visualisierung der Neigung von für Fahrräder geeigneten Wegen in Wien.
 
 Datenbasis ist das Geländemodell der MA 41.
 
-Weitere Infos im [Blogeintrag](https://elias-gander.github.io/wie-steil-sind-wiens-radstrecken).
+Weitere Infos im [Blogeintrag](https://elias-gander.github.io/2025-9-8-wie-steil-sind-wiens-radstrecken).
 
 [Demo](https://elias-gander.github.io/data-visualization/wie-steil-sind-wiens-radstrecken/)
 
