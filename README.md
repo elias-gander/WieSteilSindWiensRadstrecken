@@ -1,10 +1,10 @@
 # Wie steil sind Wiens Radstrecken?
 
-Visualisierung der Neigung von für Fahrräder geeigneten Wegen in Wien.
+Visualisierung der Straßenneigungen im Wiener Hauptradverkehrsnetz.
 
 Datenbasis ist das Geländemodell der MA 41.
 
-Weitere Infos im [Blogeintrag](https://elias-gander.github.io/wie-steil-sind-wiens-radstrecken).
+Weitere Infos im [Blogeintrag](https://elias-gander.github.io/2025-9-8-wie-steil-sind-wiens-radstrecken).
 
 [Demo](https://elias-gander.github.io/data-visualization/wie-steil-sind-wiens-radstrecken/)
 
@@ -22,9 +22,11 @@ Weitere Infos im [Blogeintrag](https://elias-gander.github.io/wie-steil-sind-wie
 
 3. Benötigte Python Packages installieren: `pip install -r requirements.txt`
 
-4. Alle Zellen des Jupyter-Notebooks (_wiener_strassenbaeume.ipynb_) ausführen
+4. FMZK- und Höhenlinien Datenset herunterladen und im _datasets_ ablegen (siehe erste Zelle in _notebook.ipynb_)
 
-5. Interaktive Kartendarstellung starten
+5. Alle Zellen des Jupyter-Notebooks (_notebook.ipynb_) ausführen
+
+6. Interaktive Kartendarstellung starten
 
    1. Im Terminal in den _web_-Folder navigieren
    2. `python -m http.server`

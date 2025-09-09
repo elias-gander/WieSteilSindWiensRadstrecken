@@ -1,0 +1,30 @@
+{
+"type": "FeatureCollection",
+"name": "bezirke",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "NAME": "Döbling" }, "geometry": { "type": "Point", "coordinates": [ 16.33369319083803, 48.259031138497143 ] } },
+{ "type": "Feature", "properties": { "NAME": "Josefstadt" }, "geometry": { "type": "Point", "coordinates": [ 16.347822606715646, 48.211029352435474 ] } },
+{ "type": "Feature", "properties": { "NAME": "Brigittenau" }, "geometry": { "type": "Point", "coordinates": [ 16.377275528684496, 48.240189838958784 ] } },
+{ "type": "Feature", "properties": { "NAME": "Penzing" }, "geometry": { "type": "Point", "coordinates": [ 16.241600353601331, 48.221060442681193 ] } },
+{ "type": "Feature", "properties": { "NAME": "Rudolfsheim-Fünfhaus" }, "geometry": { "type": "Point", "coordinates": [ 16.326070639031538, 48.195473944647389 ] } },
+{ "type": "Feature", "properties": { "NAME": "Margareten" }, "geometry": { "type": "Point", "coordinates": [ 16.355935432041679, 48.186800811685778 ] } },
+{ "type": "Feature", "properties": { "NAME": "Leopoldstadt" }, "geometry": { "type": "Point", "coordinates": [ 16.423279744717362, 48.203630598533294 ] } },
+{ "type": "Feature", "properties": { "NAME": "Hernals" }, "geometry": { "type": "Point", "coordinates": [ 16.290203569269053, 48.233716255760854 ] } },
+{ "type": "Feature", "properties": { "NAME": "Landstraße" }, "geometry": { "type": "Point", "coordinates": [ 16.396082092580762, 48.193759767214409 ] } },
+{ "type": "Feature", "properties": { "NAME": "Alsergrund" }, "geometry": { "type": "Point", "coordinates": [ 16.356488272353914, 48.222812887378367 ] } },
+{ "type": "Feature", "properties": { "NAME": "Wieden" }, "geometry": { "type": "Point", "coordinates": [ 16.370374989229468, 48.192565369445333 ] } },
+{ "type": "Feature", "properties": { "NAME": "Favoriten" }, "geometry": { "type": "Point", "coordinates": [ 16.387639105315472, 48.152102878390657 ] } },
+{ "type": "Feature", "properties": { "NAME": "Liesing" }, "geometry": { "type": "Point", "coordinates": [ 16.293235209181567, 48.143284449612345 ] } },
+{ "type": "Feature", "properties": { "NAME": "Donaustadt" }, "geometry": { "type": "Point", "coordinates": [ 16.494933203205409, 48.218867730507817 ] } },
+{ "type": "Feature", "properties": { "NAME": "Simmering" }, "geometry": { "type": "Point", "coordinates": [ 16.446305231961354, 48.163995547263006 ] } },
+{ "type": "Feature", "properties": { "NAME": "Innere Stadt" }, "geometry": { "type": "Point", "coordinates": [ 16.369398813941217, 48.208360911644206 ] } },
+{ "type": "Feature", "properties": { "NAME": "Hietzing" }, "geometry": { "type": "Point", "coordinates": [ 16.245606942381198, 48.177335691043616 ] } },
+{ "type": "Feature", "properties": { "NAME": "Mariahilf" }, "geometry": { "type": "Point", "coordinates": [ 16.349824595554256, 48.194758455783905 ] } },
+{ "type": "Feature", "properties": { "NAME": "Neubau" }, "geometry": { "type": "Point", "coordinates": [ 16.346963017429395, 48.202519412302166 ] } },
+{ "type": "Feature", "properties": { "NAME": "Meidling" }, "geometry": { "type": "Point", "coordinates": [ 16.322367106287469, 48.170526800132016 ] } },
+{ "type": "Feature", "properties": { "NAME": "Währing" }, "geometry": { "type": "Point", "coordinates": [ 16.318978012833369, 48.235552162363312 ] } },
+{ "type": "Feature", "properties": { "NAME": "Ottakring" }, "geometry": { "type": "Point", "coordinates": [ 16.299600740547621, 48.215399140028907 ] } },
+{ "type": "Feature", "properties": { "NAME": "Floridsdorf" }, "geometry": { "type": "Point", "coordinates": [ 16.411172500098544, 48.281188360213847 ] } }
+]
+}

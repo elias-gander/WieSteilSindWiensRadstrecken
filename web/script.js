@@ -167,9 +167,9 @@ function updateSlopePopup(feature) {
   } else {
     App.slopeLabel =
       feature.properties.slope == null
-        ? "Auf oder unter Brücke"
+        ? "Über/unter Brücke"
         : `${(feature.properties.slope * 100).toFixed(2)}% Neigung`;
-    App.lengthLabel = `über ${feature.properties.length.toFixed(2)} m`;
+    App.lengthLabel = `↔ ${feature.properties.length.toFixed(2)} m`;
     map.getSource("selected-segment").setData({
       type: "FeatureCollection",
       features: [feature],
@@ -259,7 +259,7 @@ map.on("load", async () => {
     });
   }
 
-  const data = await (await fetch("segments.geojson")).json();
+  const data = await (await fetch("datasets/segments.geojson")).json();
   initSpatialSegmentIndex(data.features);
   updateSegmentLengths();
   map.addSource("segments", { type: "geojson", data });
@@ -276,6 +276,10 @@ map.on("load", async () => {
       type: "FeatureCollection",
       features: [],
     },
+  });
+  map.addSource("bezirke", {
+    type: "geojson",
+    data: "datasets/bezirke.geojson",
   });
   map.addSource("maptiler-labels", {
     type: "vector",
@@ -329,7 +333,7 @@ map.on("load", async () => {
         map.getMinZoom(),
         1.5,
         map.getMaxZoom(),
-        50,
+        100,
       ],
     },
   });
@@ -346,7 +350,7 @@ map.on("load", async () => {
         map.getMinZoom(),
         1.5,
         map.getMaxZoom(),
-        50,
+        100,
       ],
     },
   });
@@ -364,18 +368,37 @@ map.on("load", async () => {
       "line-width": 1,
     },
   });
-  const streetnames = await (await fetch("streetnames.json")).json();
+  const streetnames = await (await fetch("datasets/streetnames.json")).json();
   map.addLayer({
     id: "street-labels",
     type: "symbol",
     source: "maptiler-labels",
     "source-layer": "transportation_name",
+    minzoom: 13.5,
     filter: ["match", ["get", "name"], streetnames, true, false],
     layout: {
       "text-field": ["get", "name"],
       "symbol-placement": "line",
       "text-font": ["Noto Sans Regular"],
       "text-size": 12,
+    },
+    paint: {
+      "text-color": "#333",
+      "text-halo-color": "#fff",
+      "text-halo-width": 1,
+    },
+  });
+
+  map.addLayer({
+    id: "bezirke-label",
+    type: "symbol",
+    source: "bezirke",
+    maxzoom: 13.5,
+    layout: {
+      "text-field": ["to-string", ["get", "NAME"]],
+      "text-font": ["Noto Sans Regular"],
+      "text-size": 12,
+      "text-anchor": "center",
     },
     paint: {
       "text-color": "#333",

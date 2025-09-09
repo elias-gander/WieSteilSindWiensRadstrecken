@@ -147,7 +147,7 @@ body {
 }
 
 #filtered-segments-length-bar-labels span:last-child {
-  color: #e4e4e4ff;
+  color: rgb(200, 200, 200);
   text-align: right;
 }
 

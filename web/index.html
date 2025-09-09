@@ -88,9 +88,12 @@
     </div>
     <div id="infos" v-bind:class="{ visible: App.isInfosPresented }">
       <p>
-        Diese Karte visualisiert die Neigung von für Fahrräder geeigneten Wegen
-        in Wien. Die Neigung ist als prozentuale Steigung bzw. Gefälle
-        angegeben:
+        Diese Karte visualisiert die Straßenneigung im Wiener
+        <a
+          href="https://www.data.gv.at/datasets/1ea3d3e8-fa07-4c37-af68-eb588d439de2"
+          target="_blank"
+          >Hauptradverkehrsnetz</a
+        >. Die Neigung ist als prozentuale Steigung bzw. Gefälle angegeben:
       </p>
       <ul>
         <li>0% ... flache Strecke</li>
@@ -113,17 +116,18 @@
           >Genauigkeit von ± 10 cm</a
         >.
       </p>
-      <p>
-        Die für Fahrräder geeigneten Wege stammen von
-        <a href="https://www.openstreetmap.org" target="_blank">OpenStreetMap</a
-        >.
-      </p>
       <p>Stand der visualisierten Daten: 08.09.2025</p>
       <p>
         <a
           href="https://elias-gander.github.io/2025-9-8-wie-steil-sind-wiens-radstrecken"
           target="_blank"
-          >Weitere Informationen und source code.</a
+          >Weitere Informationen</a
+        >
+        und
+        <a
+          href="https://github.com/elias-gander/WieSteilSindWiensRadstrecken"
+          target="_blank"
+          >source code</a
         >
       </p>
 
